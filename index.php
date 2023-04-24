@@ -21,26 +21,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   $lowercase = 'abcdefghijklmnopqrstuvwxyz';
   
+  $charactersAlreadyChosen = 0;
   $characters = '';
+  $password = '';
+
   if ($use_symbols) {
     $characters .= $symbols;
+    $password .= $symbols[random_int(0, strlen($symbols) - 1)];
+    $charactersAlreadyChosen++;
   }
   if ($use_numbers) {
     $characters .= $numbers;
+    $password .= $numbers[random_int(0, strlen($numbers) - 1)];
+    $charactersAlreadyChosen++;
   }
   if ($use_uppercase) {
     $characters .= $uppercase;
+    $password .= $uppercase[random_int(0, strlen($uppercase) - 1)];
+    $charactersAlreadyChosen++;
   }
   if ($use_lowercase) {
     $characters .= $lowercase;
+    $password .= $lowercase[random_int(0, strlen($lowercase) - 1)];
+    $charactersAlreadyChosen++;
   }
 
-  $password = '';
-  for ($i = 0; $i < $length; $i++) {
-    $password .= $characters[random_int(0, strlen($characters) - 1)];
+  if($password != ''){
+    for ($i = 0; $i < ($length - $charactersAlreadyChosen); $i++) {
+      $password .= $characters[random_int(0, strlen($characters) - 1)];
+    }
+  } else {
+    $password = $symbols.$uppercase.$lowercase.$numbers;
+    $password = $password[random_int(0, strlen($password) - 1)];
   }
-
-  //echo 'Senha gerada: ' . $password;
 }
 ?>
 <h1>Gerador de Senhas</h1>
@@ -68,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   <div class="letras">
       <label for="use_lowercase">Incluir letras minúsculas</label>
-      <input type="checkbox" name="use_lowercase" id="use_lowercase" required>
+      <input type="checkbox" name="use_lowercase" id="use_lowercase">
     </div>
     <br>
   
