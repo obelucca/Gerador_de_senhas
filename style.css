@@ -1,0 +1,93 @@
+@charset "UTF8";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;1,300;1,500&display=swap');
+
+body{
+ font-family: 'Poppins', sans-serif;
+ background-color: #4D2773;
+ color: #E2E0E1;
+}
+
+h1{
+    text-align: center;
+    color: #E2E0E1
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #141A26;
+    max-width: 40vw;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 2px 5px  #4D2773;
+   
+  }
+  
+  .comp, .letras {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  label {
+    margin-right: 10px;
+  }
+  
+  input[type="number"] {
+    width: 8rem;
+    height: 2rem;
+    border-radius: 15px;
+    border: 1px solid #4D2773;
+    background-color: #141A26;
+    color: #E2E0E1;
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  input::placeholder{
+    color: #8f8d8e;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px; 
+    height: 20px;
+    border-radius: 50%; 
+    outline: none; 
+    background-color: #E2E0E1; 
+    border: none; 
+    margin-right: 5px; 
+  }
+  
+  input[type="checkbox"]:checked {
+    background-color: #4D2773; 
+  }
+
+  button[type="submit"] {
+    width: 16rem;
+    height: 2rem;
+    border-radius: 15px;
+    border: 1px solid #4D2773;
+    background-color: #4D2773;
+    color: #E2E0E1;
+    font-size: 1rem;
+  }
+
+  button:hover{
+    cursor: pointer;
+    color: #141A26;
+  }
+
+  p{
+    font-size: 0.8rem;
+  }
+  
