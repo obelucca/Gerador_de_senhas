@@ -1,3 +1,11 @@
+<?php 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+require_once('Password.php'); 
+?>
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +17,11 @@
 </head>
 <body>
 <?php
+
+function sortChar($characters){
+  return $characters[random_int(0, strlen($characters) -1)];
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $length = $_POST['length']??8;
   $use_symbols = isset($_POST['use_symbols']);
@@ -27,33 +40,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   if ($use_symbols) {
     $characters .= $symbols;
-    $password .= $symbols[random_int(0, strlen($symbols) - 1)];
+    $password .= sortChar($symbols);
     $charactersAlreadyChosen++;
   }
   if ($use_numbers) {
     $characters .= $numbers;
-    $password .= $numbers[random_int(0, strlen($numbers) - 1)];
+    $password .= sortChar($numbers);
     $charactersAlreadyChosen++;
   }
   if ($use_uppercase) {
     $characters .= $uppercase;
-    $password .= $uppercase[random_int(0, strlen($uppercase) - 1)];
+    $password .= sortChar($uppercase);
     $charactersAlreadyChosen++;
   }
   if ($use_lowercase) {
     $characters .= $lowercase;
-    $password .= $lowercase[random_int(0, strlen($lowercase) - 1)];
+    $password .= sortChar($lowercase);
     $charactersAlreadyChosen++;
   }
 
-  if($password != ''){
-    for ($i = 0; $i < ($length - $charactersAlreadyChosen); $i++) {
-      $password .= $characters[random_int(0, strlen($characters) - 1)];
-    }
-  } else {
-    $password = $symbols.$uppercase.$lowercase.$numbers;
-    $password = $password[random_int(0, strlen($password) - 1)];
+  if($password == ''){
+    $characters = $symbols.$uppercase.$lowercase.$numbers;
   }
+
+  for ($i = 0; $i < ($length - $charactersAlreadyChosen); $i++) {
+    $password .= $characters[random_int(0, strlen($characters) - 1)];
+  }
+
+
 }
 ?>
 <h1>Gerador de Senhas</h1>
@@ -90,12 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   <p><?php echo "Senha Gerada: " . $password?></p>
 </form>
-
-
-
-<?php
-
-?>
 
 </body>
 </html>
