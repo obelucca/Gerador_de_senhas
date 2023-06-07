@@ -9,80 +9,64 @@
 </head>
 <body>
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+  ini_set('display_errors', '1');
+  ini_set('display_startup_errors', '1');
+  error_reporting(E_ALL);
+
+  require_once('Password.php');
+
+  if($_SERVER['REQUEST_METHOD'] == 'POST') {
   $length = $_POST['length']??8;
   $use_symbols = isset($_POST['use_symbols']);
   $use_numbers = isset($_POST['use_numbers']);
   $use_uppercase = isset($_POST['use_uppercase']);
   $use_lowercase = isset($_POST['use_lowercase']);
 
-  $symbols = '!@#$%^&*()_+-=';
-  $numbers = '0123456789';
-  $uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  $lowercase = 'abcdefghijklmnopqrstuvwxyz';
-  
-  $characters = '';
-  if ($use_symbols) {
-    $characters .= $symbols;
-  }
-  if ($use_numbers) {
-    $characters .= $numbers;
-  }
-  if ($use_uppercase) {
-    $characters .= $uppercase;
-  }
-  if ($use_lowercase) {
-    $characters .= $lowercase;
-  }
 
-  $password = '';
-  for ($i = 0; $i < $length; $i++) {
-    $password .= $characters[random_int(0, strlen($characters) - 1)];
-  }
-
-  //echo 'Senha gerada: ' . $password;
+  $passwordClass = new Password($length);
+  $passwordClass->setConfig('use_numbers', $use_numbers);
+  $passwordClass->setConfig('use_lowercase', $use_lowercase);
+  $passwordClass->setConfig('use_uppercase', $use_uppercase);
+  $passwordClass->setConfig('use_symbols', $use_symbols);
+  $passwordClass->generatePassword();
 }
-?>
-<h1>Gerador de Senhas</h1>
-<form method="post">
-  <div class="comp">
-    <label for="length">Comprimento da Senha:</label>
-    <input type="number" name="length" id="length" min="1" max="100"  placeholder="Tamanho da senha" class="length" required><br>
-  </div>
 
-  <div class="comp">
-    <label for="use_symbols">Incluir símbolos</label>
-    <input type="checkbox" name="use_symbols" id="use_symbols">
-    <br>
-  </div>
-
-  <div class="comp">
-    <label for="use_numbers">Incluir números</label>
-    <input type="checkbox" name="use_numbers" id="use_numbers">
-    <br>
-  </div>
-  <div class="letras">
-      <label for="use_uppercase">Incluir letras maiúsculas</label>
-      <input type="checkbox" name="use_uppercase" id="use_uppercase">
-  </div>
-
-  <div class="letras">
-      <label for="use_lowercase">Incluir letras minúsculas</label>
-      <input type="checkbox" name="use_lowercase" id="use_lowercase" required>
-    </div>
-    <br>
   
-
-  <button type="submit">Gerar senha</button>
-
-  <p><?php echo "Senha Gerada: " . $password?></p>
-</form>
-
-
-
-<?php
-
 ?>
+  <h1>Gerador de Senhas</h1>
+  <form method="post">
+    <div class="comp">
+      <label for="length">Comprimento da Senha:</label>
+      <input type="number" name="length" id="length" min="1" max="100"  placeholder="Tamanho da senha" class="length"><br>
+    </div>
 
+    <div class="comp">
+      <label for="use_symbols">Incluir símbolos</label>
+      <input type="checkbox" name="use_symbols" id="use_symbols">
+      <br>
+    </div>
+
+    <div class="comp">
+      <label for="use_numbers">Incluir números</label>
+      <input type="checkbox" name="use_numbers" id="use_numbers">
+      <br>
+    </div>
+    <div class="letras">
+        <label for="use_uppercase">Incluir letras maiúsculas</label>
+        <input type="checkbox" name="use_uppercase" id="use_uppercase">
+    </div>
+
+    <div class="letras">
+        <label for="use_lowercase">Incluir letras minúsculas</label>
+        <input type="checkbox" name="use_lowercase" id="use_lowercase">
+      </div>
+      <br>
+    
+
+    <button type="submit">Gerar senha</button>
+
+    <p><?php echo "Senha Gerada: " . $passwordClass->getPassword();?></p>
+  </form>
 </body>
 </html>
