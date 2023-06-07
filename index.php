@@ -86,11 +86,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <p><?php echo "Senha Gerada: " . $password?></p>
 </form>
 
-
-
-<?php
-
-?>
-
 </body>
 </html>
